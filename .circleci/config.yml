@@ -40,13 +40,16 @@ jobs:
 
 workflows:
   version: 2
-  scheduled_workflow:
-    triggers:
-      - schedule:
-          cron: "0 10 * * 1-5"
-          filters:
-            branches:
-              only:
-                - master
+  run_immediatly:
     jobs:
       - post_question
+#  scheduled_workflow:
+#    triggers:
+#      - schedule:
+#          cron: "0 10 * * 1-5"
+#          filters:
+#            branches:
+#              only:
+#                - master
+#    jobs:
+#      - post_question
