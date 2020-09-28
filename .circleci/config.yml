@@ -40,6 +40,13 @@ jobs:
 
 workflows:
   version: 2
+  test-build:
+    jobs:
+      - post_question:
+          filters:
+            branches:
+              only:
+                - master
   scheduled_workflow:
     triggers:
       - schedule:
