@@ -4,7 +4,8 @@ const LEETCODE_BASE_URL = 'https://leetcode.com/';
 const LEETCODE_ALL_QUESTION_URL = `${LEETCODE_BASE_URL}api/problems/all/`;
 const LEETCODE_RECOMMENDED_LIST_URL = `${LEETCODE_BASE_URL}list/api/get_list/xo2bgr0r/`;
 
-const SLACK_WEBHOOK_URL = "https://hooks.slack.com/services/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";
+const SLACK_WEBHOOK_URL =
+  'https://hooks.slack.com/services/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';
 
 const DIFFICULTIES = ['Easy', 'Medium', 'Hard'];
 
@@ -79,10 +80,9 @@ function formatText(
 
 // Post the generated message to Slack
 async function postQuestion(text: string) {
-  const { status, config } = await axios({
+  await axios({
     method: 'post',
     url: SLACK_WEBHOOK_URL,
     data: { text },
   });
-  console.info(status, config.data);
 }
