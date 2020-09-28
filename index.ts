@@ -1,11 +1,11 @@
 import axios from 'axios';
+import * as dotenv from 'dotenv';
 
 const LEETCODE_BASE_URL = 'https://leetcode.com/';
 const LEETCODE_ALL_QUESTION_URL = `${LEETCODE_BASE_URL}api/problems/all/`;
 const LEETCODE_RECOMMENDED_LIST_URL = `${LEETCODE_BASE_URL}list/api/get_list/xo2bgr0r/`;
 
-const SLACK_WEBHOOK_URL =
-  'https://hooks.slack.com/services/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';
+const { SLACK_WEBHOOK_URL } = process.env;
 
 const DIFFICULTIES = ['Easy', 'Medium', 'Hard'];
 
