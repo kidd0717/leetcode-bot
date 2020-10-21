@@ -60,7 +60,7 @@ async function getData(url) {
 // Get all non-paid questions
 function getFreeQuestions(data) {
   return data.stat_status_pairs.filter(
-    ({ difficulty, paid_only }) => difficulty.level === 1 && !paid_only,
+    ({ difficulty, paid_only }) => difficulty.level === 2 && !paid_only,
   );
 }
 
