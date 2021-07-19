@@ -7,6 +7,7 @@ const LEETCODE_RECOMMENDED_LIST_URL = `${LEETCODE_BASE_URL}list/api/get_list/xo2
 const LEETCODE_GRAPHQL_URL = `${LEETCODE_BASE_URL}graphql`;
 
 const { SLACK_WEBHOOK_URL } = process.env;
+const { DISCORD_WEBHOOK_URL } = process.env;
 
 const DIFFICULTIES = ['Easy', 'Medium', 'Hard'];
 
@@ -116,9 +117,15 @@ function formatText(
 
 // Post the generated message to Slack
 async function postQuestion(text: string) {
+  // await axios({
+  //   method: 'post',
+  //   url: SLACK_WEBHOOK_URL,
+  //   data: { text },
+  // });
+
   await axios({
     method: 'post',
-    url: SLACK_WEBHOOK_URL,
-    data: { text },
+    url: DISCORD_WEBHOOK_URL,
+    data: { "username": "Leetcode Bot", "content": text },
   });
 }
