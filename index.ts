@@ -117,15 +117,15 @@ function formatText(
 
 // Post the generated message to Slack
 async function postQuestion(text: string) {
-  // await axios({
-  //   method: 'post',
-  //   url: SLACK_WEBHOOK_URL,
-  //   data: { text },
-  // });
+  await axios({
+    method: 'post',
+    url: SLACK_WEBHOOK_URL,
+    data: { text },
+  });
 
   await axios({
     method: 'post',
     url: DISCORD_WEBHOOK_URL,
-    data: { "username": "Leetcode Bot", "content": text },
+    data: { username: 'Leetcode Bot', content: text },
   });
 }
