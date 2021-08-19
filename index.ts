@@ -13,32 +13,37 @@ const DIFFICULTIES = ['Easy', 'Medium', 'Hard'];
 
 // Main function
 (async () => {
-  /*const { data } = await getQuestionInfo('two-sum');
-  console.log(data['question']['likes']);;
-  console.log(data['question']['dislikes'])*/
-
+  console.log('func start');
   const { questions } = await getData(LEETCODE_RECOMMENDED_LIST_URL);
   const ids = generateListIds(questions);
   const allData = await getData(LEETCODE_ALL_QUESTION_URL);
+  console.log(allData);
+  // pick medium
+  await pick(allData, ids, 2);
+  await pick(allData, ids, 3);
+})();
 
-  const data1 = getFreeQuestions(allData);
+async function pick(allData, ids, difficulty_number) {
+  console.log(difficulty_number);
+
+  const mediumData = getFreeQuestions(allData, difficulty_number);
   const data2 = getListQuestions(allData, ids);
-  const allQuestions = [...data1, ...data2];
-  var pickedQuestion = popQuestion(allQuestions);
-  const titleSlug = pickedQuestion['stat']['question__title_slug'];
+  const allQuestions = [...mediumData, ...data2];
+  var pickedMediumQuestion = popQuestion(allQuestions);
+  const titleSlug = pickedMediumQuestion['stat']['question__title_slug'];
   const { data } = await getQuestionInfo(titleSlug);
   var likes = data['question']['likes'];
   var dislikes = data['question']['dislikes'];
 
   while (likes < dislikes) {
-    pickedQuestion = popQuestion([...data1, ...data2]);
-    const titleSlug = pickedQuestion['stat']['question__title_slug'];
+    pickedMediumQuestion = popQuestion([...mediumData, ...data2]);
+    const titleSlug = pickedMediumQuestion['stat']['question__title_slug'];
     const { data } = await getQuestionInfo(titleSlug);
     likes = data['question']['likes'];
     dislikes = data['question']['dislikes'];
   }
 
-  const { difficulty: d, stat } = pickedQuestion;
+  const { difficulty: d, stat } = pickedMediumQuestion;
   const text = formatText(
     stat.frontend_question_id,
     stat.question__title,
@@ -47,7 +52,7 @@ const DIFFICULTIES = ['Easy', 'Medium', 'Hard'];
   );
 
   postQuestion(text);
-})();
+}
 
 // API call
 async function getData(url) {
@@ -59,9 +64,10 @@ async function getData(url) {
 }
 
 // Get all non-paid questions
-function getFreeQuestions(data) {
+function getFreeQuestions(data, difficulty_number) {
   return data.stat_status_pairs.filter(
-    ({ difficulty, paid_only }) => difficulty.level === 2 && !paid_only,
+    ({ difficulty, paid_only }) =>
+      difficulty.level === difficulty_number && !paid_only,
   );
 }
 
@@ -117,6 +123,8 @@ function formatText(
 
 // Post the generated message to Slack
 async function postQuestion(text: string) {
+  console.log(DISCORD_WEBHOOK_URL);
+
   await axios({
     method: 'post',
     url: SLACK_WEBHOOK_URL,
