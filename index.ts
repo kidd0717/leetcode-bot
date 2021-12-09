@@ -125,11 +125,11 @@ function formatText(
 async function postQuestion(text: string) {
   console.log(DISCORD_WEBHOOK_URL);
 
-  await axios({
-    method: 'post',
-    url: SLACK_WEBHOOK_URL,
-    data: { text },
-  });
+  // await axios({
+  //   method: 'post',
+  //   url: SLACK_WEBHOOK_URL,
+  //   data: { text },
+  // });
 
   await axios({
     method: 'post',
